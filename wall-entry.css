@@ -18,8 +18,9 @@
 .wall-cancel{position:absolute;z-index:3;top:12px;right:12px;min-height:48px;padding:9px 14px;border-color:#a4ae9a;background:var(--white);color:var(--ink);font-size:18px}
 .wall-cancel[hidden]{display:none}
 .wall-portal .wall-status{font-size:.8rem;line-height:1.6;color:var(--muted);margin:12px 0 0;min-height:1.6em;max-width:none}
-.wall-portal.is-opening .wall-left{transform:rotateY(-84deg)}
-.wall-portal.is-opening .wall-right{transform:rotateY(84deg)}
+/* Outer hinges: these signs move both free edges into negative Z, away from the viewer. */
+.wall-portal.is-opening .wall-left{transform:rotateY(84deg)}
+.wall-portal.is-opening .wall-right{transform:rotateY(-84deg)}
 .wall-portal.is-opening .wall-landscape{opacity:1}
 .wall-home-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:20px}
 @media(max-width:660px){.hero.wall-enhanced .wall-portal{margin-top:20px}.wall-trigger{aspect-ratio:1.75;border-radius:18px}.wall-label{bottom:12px;padding:8px 16px}.wall-cancel{top:8px;right:8px;padding:8px 12px}.wall-portal .wall-status{font-size:.78rem;line-height:1.5;margin-top:8px;min-height:3em}}
