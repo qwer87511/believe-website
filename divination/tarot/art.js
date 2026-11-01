@@ -1,0 +1,29 @@
+import {escapeHTML} from '../shared.js';
+const icons={
+cliff:'<circle cx="87" cy="68" r="11"/><path d="m83 79-12 41 30 18m-27-30-25 5m26-17 27-13M30 170l48-16 28 16-13 28m-13-44 20-25 21 8"/><path d="m80 117-12 32m19-26 15 20"/>',
+tools:'<path d="M36 131h108M47 131v50m86-50v50M90 68v52m-10-42 10-14 10 14M53 113h20m-10-8v16m45-9h19m-13-10 8 20"/><path d="M68 47c-20-18-20 22 0 5l8-8c20-18 20 22 0 5Z"/>',
+pillars:'<path d="M37 66h21v120H37Zm85 0h21v120h-21M36 62h24m60 0h24M79 111h23v70H79Z"/><path d="M101 39a21 21 0 1 0 16 33 17 17 0 0 1-16-33"/>',
+garden:'<circle cx="91" cy="81" r="16"/><path d="M62 149q29-53 58 0v30H62ZM56 61l7-14 11 14 14-15 14 15 13-14 8 14M29 192q-5-36 20-48m-17 31 21-7m77 24q5-36 20-48m-19 28 19-8"/>',
+throne:'<path d="M42 72h96v107H42Zm12 0V54h72v18M57 179v16m66-16v16M70 124h40v39H70Z"/><circle cx="90" cy="97" r="14"/><path d="m81 54 9-15 9 15M52 118h15m46 0h15"/>',
+keys:'<path d="M57 59h66v30H57Zm15-14v29m36-29v29M58 165l64-64m-55 55 12 12m-2-22 12 12m33 7-64-64m55 55-12 12m2-22-12 12"/><circle cx="52" cy="96" r="13"/><circle cx="128" cy="96" r="13"/>',
+pair:'<circle cx="58" cy="104" r="12"/><circle cx="122" cy="104" r="12"/><path d="M43 164v-29q15-24 30 0l17 13 17-13q15-24 30 0v29M72 56q18-23 36 0-18 24-36 0Z"/><path d="M90 69v26m-18-12 18 12 18-12"/>',
+chariot:'<path d="M40 85h100l-8 79H48ZM42 79l48-35 48 35M90 85v51M59 174h63"/><circle cx="55" cy="174" r="13"/><circle cx="125" cy="174" r="13"/><path d="m75 120 15-16 15 16"/>',
+lion:'<circle cx="100" cy="132" r="35"/><circle cx="100" cy="132" r="23"/><path d="m89 132 5 8h12l5-8m-14 12v8m-15-33 8 4m20-4-8 4M49 166l11-69 22 12"/><circle cx="61" cy="80" r="12"/><path d="M48 45c-20-18-20 22 0 5l8-8c20-18 20 22 0 5Z"/>',
+lantern:'<path d="m54 181 13-78 25-20 19 98ZM100 70h35v44h-35ZM111 70v-9h13v9M123 114v68"/><path d="m118 80 3 9 9 3-9 3-3 9-3-9-8-3 8-3Z"/><circle cx="79" cy="67" r="13"/>',
+wheel:'<circle cx="90" cy="120" r="57"/><circle cx="90" cy="120" r="31"/><circle cx="90" cy="120" r="9"/><path d="M90 63v26m0 62v26M33 120h26m62 0h26M50 80l18 18m44 44 18 18M50 160l18-18m44-44 18-18"/>',
+scales:'<path d="M90 62v119M55 186h70M47 87h86m-84 0-22 49h44Zm82 0-22 49h44Z"/><circle cx="90" cy="60" r="9"/><path d="M31 136q18 25 36 0m46 0q18 25 36 0"/>',
+inverted:'<path d="M37 55h106M90 55v44m0 0 28 25-28 18-26-31m26-12v58m0-2-23-18m23 18 23-18"/><circle cx="90" cy="174" r="13"/><circle cx="90" cy="174" r="24"/>',
+seed:'<path d="M27 171h126M90 171v-42m0 0q-39-2-34-31 32 2 34 31Zm0-12q6-32 35-29 1 28-35 29M42 191h96"/><circle cx="90" cy="57" r="22"/><path d="M90 35v44m-22-22h44"/>',
+cups:'<path d="M39 72h40v20q-20 27-40 0ZM59 108v26m-13 0h26M101 130h40v20q-20 27-40 0Zm20 36v26m-13 0h26M80 85q32 11 30 40M36 189q26-20 48 0"/>',
+chain:'<path d="M45 152q-35-25-10-50 21-20 45 3m55 47q35-25 10-50-21-20-45 3M62 139l20 18m16-18 20 18M65 178q25 16 50 0M72 66l18-21 18 21-18 25Z"/><path d="M79 126h22"/>',
+tower:'<path d="M60 190V99h60v91m-70 0h80M65 88l-9-20 21 8 13-24 13 24 21-8-9 20M78 114h24v24H78Zm0 76v-30h24v30M144 44l-19 31h17l-14 26"/>',
+star:'<path d="m90 39 10 30 31 1-25 19 8 30-24-18-25 18 9-30-25-19 31-1Z"/><path d="M39 154q26-15 51 0t51 0M39 176q26-15 51 0t51 0M36 60v13m-6-6h13m97 35v13m-6-6h13"/>',
+moon:'<path d="M103 38a35 35 0 1 0 24 60 29 29 0 0 1-24-60ZM30 174l35-39 25 22 25-22 35 39M75 199q42-23 12-32M39 114v19m102-19v19"/>',
+sun:'<circle cx="90" cy="95" r="32"/><path d="M90 47V31m0 128v-16M42 95H26m128 0h-16M56 61 44 49m92 92-12-12M56 129l-12 12m92-92-12 12M31 181q59-32 118 0"/>',
+calling:'<path d="m41 72 74-18-9 48ZM114 63l17-9m-20 24 25 4m-32 12 18 14M57 116v36m-14-17 14 17 14-17M37 185h106M54 185v-18m36 18v-30m36 30v-18"/>',
+wreath:'<ellipse cx="90" cy="119" rx="53" ry="72"/><path d="M40 86l18 2-11 17 17 1-14 18 15 4-10 16 17 3M140 86l-18 2 11 17-17 1 14 18-15 4 10 16-17 3M81 108l-10 43h38l-10-43M90 151v22"/><circle cx="90" cy="92" r="12"/>'
+};
+function minor(card){const shape={wands:'<path d="M-7 13 7-13m-3 3 7-1m-15 16-6-1"/>',cups:'<path d="M-9-10H9v10Q0 16-9 0Zm9 17v7m-7 0H7"/>',swords:'<path d="M0 15V-17m-7 8 7-8 7 8M-9 7H9"/>',pentacles:'<circle r="12"/><path d="m0-9 5 16-13-10H8L-5 7Z"/>'}[card.suit];if(card.court)return `<path d="M49 190V85h82v105M60 85l-8-25 22 11 16-25 16 25 22-11-8 25"/><circle cx="90" cy="115" r="14"/><path d="M65 177v-29q25-21 50 0v29Z"/><g transform="translate(90 159)">${shape}</g>${Array.from({length:['page','knight','queen','king'].indexOf(card.rank)+1},(_,i)=>`<circle cx="${60+i*20}" cy="205" r="3"/>`).join('')}`;const n=card.rank==='ace'?1:Number(card.rank);return Array.from({length:n},(_,i)=>{const col=n===1?0:i%2,row=Math.floor(i/2),rows=Math.ceil(n/2);return `<g transform="translate(${n===1?90:col?119:61} ${n===1?123:65+row*(120/Math.max(1,rows-1))})">${shape}</g>`;}).join('');}
+export function art(card,{reversed=false}={}){return `<svg class="tarot-art ${reversed?'is-reversed':''}" viewBox="0 0 180 230" aria-hidden="true"><rect x="5" y="5" width="170" height="220" rx="12" fill="#ece8d5"/><path d="M17 214V74a73 73 0 0 1 146 0v140Z" fill="#e1e8d9" stroke="#b9ac7f"/><circle cx="137" cy="40" r="14" fill="#ceb574"/><g fill="none" stroke="#345247" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${card.arcana==='minor'?minor(card):icons[card.symbol]}</g><path d="M20 209h140" stroke="#b9ac7f"/></svg>`;}
+export function face(card,reversed=false){return `<span class="tarot-number">${escapeHTML(card.roman)} · ${escapeHTML(card.english)}</span>${art(card,{reversed})}<strong class="tarot-name">${escapeHTML(card.name)}</strong><span class="tarot-orientation">${reversed?'逆位':'正位'} · ${escapeHTML(card.theme)}</span>`;}
+export const back='<span class="tarot-back" aria-hidden="true"><span>✧</span><svg viewBox="0 0 180 230"><rect x="12" y="12" width="156" height="206" rx="55"/><circle cx="90" cy="115" r="42"/><path d="M90 48v134M23 115h134M43 68l94 94m0-94-94 94"/><circle cx="90" cy="115" r="20"/></svg><span>believe</span></span>';

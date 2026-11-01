@@ -5,7 +5,7 @@
   const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let active = null;
   const route = () => location.hash.replace(/^#\/?/, "") || "home";
-  const hint = () => motion.matches ? "已減少動態，啟動後直接前往問道卡。" : "輕觸牆面，讓牆後的路慢慢打開。";
+  const hint = () => motion.matches ? "已減少動態，啟動後直接前往占卜館。" : "輕觸牆面，讓牆後的路慢慢打開。";
 
   function stop({ focus = false, message = "" } = {}) {
     const run = active;
@@ -43,7 +43,7 @@
       run.start.setAttribute("aria-busy", "true");
       run.label.textContent = "牆面開啟中…";
       run.cancel.hidden = false;
-      run.status.textContent = "牆面正在開啟，接著前往問道卡。";
+      run.status.textContent = "牆面正在開啟，接著前往占卜館。";
       run.timer = window.setTimeout(() => {
         if (active !== run) return;
         const canContinue = route() === "home" && !document.hidden && portal.isConnected;

@@ -1,0 +1,14 @@
+import {cards,version} from './data.js';
+import {draw,validateInput} from './engine.js';
+import {oracleSession,saveResult,clearRecord} from './session.js';
+import {button,escapeHTML as esc} from '../shared.js';
+export {draw,validateInput};
+export const definition=Object.freeze({id:'oracle',version,capabilities:{counts:[1],reversals:false,persistence:'session-card-id',question:'none'}});
+const symbols={circle:'<circle cx="60" cy="60" r="35"/>',sun:'<circle cx="60" cy="51" r="22"/><path d="M20 88h80M60 14v7"/>',water:'<path d="M15 38q22-20 45 0t45 0M15 60q22-20 45 0t45 0M15 82q22-20 45 0t45 0"/>',path:'<path d="M74 10C12 44 104 55 54 85c-15 9-27 16-32 25"/>',lamp:'<path d="M43 40h34l7 48H36l7-48ZM47 40V28a13 13 0 0 1 26 0v12M28 96h64"/>',mountain:'<path d="m12 91 31-58 25 38 14-22 26 42H12Z"/>'};
+export function mount({root,signal}){
+  let disposed=false;
+  function render(){if(disposed)return;const card=cards.find(c=>c.id===oracleSession.result?.cardId);root.innerHTML=`<section class="panel"><div class="oracle-layout"><div class="oracle-card" ${card?`data-card-id="${card.id}"`:''}><svg class="card-art" viewBox="0 0 120 120" aria-hidden="true"><g class="art-path">${symbols[card?.symbol||'path']}</g></svg><strong>${card?.name||'問道'}</strong><small>believe 原創 · 觀照卡</small></div><div>${card?`<p class="small-label">這次抽到的原始結果</p><h2>${card.name} · ${card.word}</h2><p>${card.text}</p><div class="one-action"><strong>可以試的一個小行動</strong><p>${card.action}</p></div>`:`<h2>留一個問題在心裡，<br>抽一張原創卡。</h2><p class="muted">六張卡，六個觀看角度。<br>不需要交出你的心事。</p>${button('抽一張原創卡','oracle-draw')}<p class="fine">只在本分頁保留原卡編號，重整不換卡；可到紀錄頁清除。</p>`}</div></div>${oracleSession.error?`<div class="error" role="alert">${esc(oracleSession.error)}<div class="actions">${button('再試一次','oracle-draw','secondary')}<a class="button quiet" href="#/records">查看或清除紀錄</a></div></div>`:''}${card?`<div class="result-block"><span class="tag">固定編寫解讀 · 非 AI</span><p class="fine">原創文字供自我觀照，不代表確定預測。版本 ${version}。</p><div class="actions"><a class="button" href="#/practice">帶著想法，做一段練習</a><a class="button secondary" href="#/records">查看或清除此分頁紀錄</a></div></div>`:''}</section><details class="reading-rules"><summary>原創問道卡規則</summary><p>六張卡等機會抽一張，先成功保留版本與卡片編號才呈現完成。重整沿用原卡，可清除。這是 believe 原創，沒有古傳或神效主張。</p></details>`;}
+  function click(event){if(!event.target.closest('[data-module-action="oracle-draw"]')||oracleSession.result)return;try{saveResult(draw());}catch{oracleSession.error='目前無法抽取並保留結果，這次尚未完成。可以再試一次，或先做自助練習。';}render();}
+  function dispose(){if(disposed)return;disposed=true;root.removeEventListener('click',click);signal.removeEventListener('abort',dispose);}
+  root.addEventListener('click',click);signal.addEventListener('abort',dispose,{once:true});render();return {dispose,clear:()=>{try{clearRecord();}catch{oracleSession.error='目前無法清除此分頁紀錄，尚未完成刪除。';}render();}};
+}
