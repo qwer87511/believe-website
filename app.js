@@ -2,6 +2,7 @@ import {registry} from "./divination/registry.js";
 import {createDivinationHost} from "./divination/host.js";
 import {cards} from "./divination/oracle/data.js";
 import {oracleSession,clearRecord} from "./divination/oracle/session.js";
+import {clearReading as clearTarotReading} from "./divination/tarot/session.js";
 "use strict";
 (() => {
   const main = document.querySelector("main");
@@ -87,7 +88,7 @@ import {oracleSession,clearRecord} from "./divination/oracle/session.js";
   }
   function records() {
     const card=oracleSession.result?cards.find(c=>c.id===oracleSession.result.cardId):null;
-    return `${pageHead("本分頁紀錄","留什麼，由你決定。","此示範只在目前瀏覽器分頁保留抽到的原創卡，沒有登入或對外傳送。塔羅問題與牌面只在占讀頁記憶，離開即清除，不加入這份紀錄。")}
+    return `${pageHead("本分頁紀錄","留什麼，由你決定。","此示範只在目前瀏覽器分頁保留抽到的原創卡，沒有登入或對外傳送。塔羅牌面只留這個分頁記憶，換頁返回可續看，重新整理或關閉即清除；問題離開占讀即清除。此瀏覽器只記住逆位偏好。")}
     <section class="panel">${card?`<p class="small-label">本分頁的原創問道卡</p><p class="record-name">${card.name} · ${card.word}</p><div class="actions">${link("回看這張卡","divination/oracle")}${button("清除示範紀錄","clear-records","secondary")}</div>`:`<p>目前沒有保留的問道卡。</p><div class="actions">${link("回到首頁","home")}${button("清除本頁示範進度","clear-records","secondary")}</div>`}<p class="fine">清除只處理此示範的分頁資料。正式網站與 LINE 的跨平台保存、本人驗證與刪除尚未接通。</p>${oracleSession.error?`<div class="error" role="alert">${oracleSession.error}</div>`:""}</section>`;
   }
   main.addEventListener("click",event=>{
@@ -101,7 +102,8 @@ import {oracleSession,clearRecord} from "./divination/oracle/session.js";
     else if(action==="topic"){state.topic=Number(target.dataset.value);render();}
     else if(action==="line-reply"){if(Object.hasOwn(replies,target.dataset.value)){state.lineReply=target.dataset.value;render();main.querySelector(".bubble[role='status']")?.scrollIntoView({block:"nearest"});}}
     else if(action==="clear-records"){
-      try {clearRecord();oracleSession.result=null;state.practice=0;state.action=null;state.topic=null;oracleSession.error="";state.lineReply=null;render();say("本分頁的示範紀錄與進度已清除。");}
+      if(!window.confirm("要清除此示範保留的問道卡、塔羅牌局與進度嗎？清除後無法復原。"))return;
+      try {clearRecord();clearTarotReading();oracleSession.result=null;state.practice=0;state.action=null;state.topic=null;oracleSession.error="";state.lineReply=null;render();say("本分頁的示範紀錄與進度已清除。");}
       catch {oracleSession.error="目前無法清除此分頁紀錄，尚未完成刪除。請檢查瀏覽器儲存設定後再試。";render();}
     }
     if(["choose-action","topic","line-reply"].includes(action))main.querySelector(`[data-action="${action}"][data-value="${target.dataset.value}"]`)?.focus({preventScroll:true});

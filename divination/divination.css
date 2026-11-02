@@ -8,3 +8,8 @@
 @media(prefers-reduced-motion:reduce){.div-progress *,.tarot-panel *{animation:none!important;transition:none!important}}
 
 .review-status{display:inline-block;font:400 .78rem "Microsoft JhengHei",sans-serif;padding:4px 10px;border:1px solid #9eb49f;border-radius:20px;background:#edf2e7;color:#345247;margin:8px 0}.review-status.pending,.review-notice{background:#f8f0df;color:#6c5126;border:1px solid #c6ae7b}.review-notice{padding:16px;border-radius:12px}.review-notice strong{display:block}.review-notice p{margin:10px 0}.review-evidence blockquote{border-left:3px solid var(--gold);margin:15px 0;padding:0 0 0 15px;font-size:.86rem;overflow-wrap:anywhere}
+
+.reading-rules.reading-method{font-size:1rem;color:var(--ink)}
+
+.reading-retention{font-size:1rem;color:var(--ink);background:var(--pale);padding:14px 18px;border-radius:12px;text-align:left}.card-deep-link{margin:14px 0;white-space:normal}.after-reading{margin:30px 0;padding:24px;border:1px solid var(--line);border-radius:16px}.after-reading h3{font-size:1.3rem}.after-reading h4{font-size:1rem}.after-reading details{border-top:1px solid var(--line);margin-top:18px}.after-reading summary,.future-preferences summary{font-size:1rem;min-height:48px;padding:14px 0;cursor:pointer}.after-reading article{margin:20px 0}.after-reading li{margin:14px 0}.confirm-clear{max-width:540px}.confirm-clear h2{font-size:1.5rem}.confirm-clear .actions{margin-top:24px}.future-preferences input{width:22px;height:22px;accent-color:var(--ink)}.after-reading summary:focus-visible,.future-preferences summary:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
+@media(max-width:660px){.after-reading{padding:20px 16px}.confirm-clear{padding:22px 18px}}
