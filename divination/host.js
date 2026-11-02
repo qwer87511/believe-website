@@ -12,7 +12,7 @@ export function createDivinationHost(registry){
       const module=await registry.load(id,{signal:run.controller.signal});if(active!==run||!root.isConnected)return;
       run.instance=module.mount({root,signal:run.controller.signal});
       if(typeof run.instance?.dispose!=='function'||typeof run.instance?.clear!=='function')throw Error('Invalid session lifecycle');
-    }catch(error){if(active!==run||run.controller.signal.aborted)return;run.controller.abort();run.instance?.dispose?.();root.innerHTML=`<section class="panel error" role="alert"><h2>這副牌暫時沒有載入。</h2><p>這次尚未抽牌。重新載入頁面可重試，也可以先換一種方式。</p><div class="actions">${button('重新載入頁面','retry-module','secondary')}<a class="button quiet" href="#/home">回到首頁</a></div></section>`;}
+    }catch(error){if(active!==run||run.controller.signal.aborted)return;run.controller.abort();run.instance?.dispose?.();root.innerHTML=`<section class="panel error" role="alert"><h2>${id==='astrology'?'這個星盤工具暫時沒有載入。':'這副牌暫時沒有載入。'}</h2><p>${id==='astrology'?'這次尚未計算。':'這次尚未抽牌。'}重新載入頁面可重試，也可以先換一種方式。</p><div class="actions">${button('重新載入頁面','retry-module','secondary')}<a class="button quiet" href="#/home">回到首頁</a></div></section>`;}
   }
   return {open,destroy,clear(){active?.instance?.clear();}};
 }
